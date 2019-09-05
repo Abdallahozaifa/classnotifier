@@ -1,0 +1,96 @@
+{
+  "EDITOR_STATE": {
+    "allProjectFiles": {
+      "6ff05121-6b05-431d-9f02-e3b347924662": {
+        "id": "6ff05121-6b05-431d-9f02-e3b347924662",
+        "parent": null,
+        "name": "classnotifier",
+        "type": "DIRECTORY",
+        "isDirectory": true,
+        "children": [
+          "f0ae7452-117e-48d0-9eec-a38770f4b027"
+        ],
+        "isRemovable": false,
+        "filePath": "classnotifier"
+      },
+      "f0ae7452-117e-48d0-9eec-a38770f4b027": {
+        "id": "f0ae7452-117e-48d0-9eec-a38770f4b027",
+        "parent": "6ff05121-6b05-431d-9f02-e3b347924662",
+        "name": "lambda.js",
+        "type": "JS_LAMBDA",
+        "isDirectory": false,
+        "children": [],
+        "isRemovable": true,
+        "filePath": "classnotifier/lambda.js",
+        "code": "    \nlet AWS = require('aws-sdk');\nconst sns = new AWS.SNS();\nexports.handler = function (event, context, callback) {\n\n\tlet receiver = event['receiver'];\n\tlet sender = event['sender'];\n\tlet message = event['message'];\n\n\tlet isPromotional = true;\n\n\tconsole.log(\"Sending message\", message, \"to receiver\", receiver);\n\n\tsns.publish({\n\t\tMessage: message,\n\t\tMessageAttributes: {\n\t\t\t'AWS.SNS.SMS.SMSType': {\n\t\t\t\tDataType: 'String',\n\t\t\t\tStringValue: 'Promotional'\n\t\t\t},\n\t\t\t'AWS.SNS.SMS.SenderID': {\n\t\t\t\tDataType: 'String',\n\t\t\t\tStringValue: sender\n\t\t\t},\n\t\t},\n\t\tPhoneNumber: receiver\n\t}).promise()\n\t\t.then(data => {\n\t\t\tconsole.log(\"Sent message to\", receiver);\n\t\t\tcallback(null, data);\n\t\t})\n\t\t.catch(err => {\n\t\t\tconsole.log(\"Sending failed\", err);\n\t\t\tcallback(err);\n\t\t});\n}",
+        "config": {
+          "runtime": "nodejs8.10",
+          "handler": "handler",
+          "timeout": 60,
+          "memory": 128,
+          "layers": []
+        },
+        "triggers": [
+          {
+            "resourceName": "snsusEast1classNotifier",
+            "config": {}
+          }
+        ]
+      }
+    },
+    "deletedFiles": [],
+    "rootNode": "6ff05121-6b05-431d-9f02-e3b347924662",
+    "openFiles": [
+      "f0ae7452-117e-48d0-9eec-a38770f4b027"
+    ],
+    "currentFileId": "f0ae7452-117e-48d0-9eec-a38770f4b027",
+    "resources": {
+      "snsusEast1classNotifier": {
+        "name": "snsusEast1classNotifier",
+        "type": "SNS",
+        "config": {
+          "topicMode": 0,
+          "topicName": "classNotifier",
+          "topicArn": "arn:aws:sns:us-east-1:206271148918:classNotifier",
+          "topicRegion": "us-east-1",
+          "snsType": 0,
+          "topicDisplayName": "",
+          "subscriptions": []
+        }
+      }
+    },
+    "customTemplate": {
+      "dialect": null,
+      "definitions": {}
+    },
+    "envVariables": [
+      {
+        "lambdaId": "all",
+        "varKey": "SIGMA_AWS_ACC_ID",
+        "varValue": null,
+        "shouldPersist": false,
+        "displayOnly": false,
+        "editable": false
+      }
+    ],
+    "packageJSON": {
+      "dependencies": {}
+    }
+  },
+  "PROJECT_META": {
+    "projectName": "classnotifier",
+    "projectDescription": "sends text when class has availability",
+    "projectVersion": "1.0.0",
+    "projectRegion": "us-east-1",
+    "platform": "AWS",
+    "platformRegions": {},
+    "lastSave": 1567696753304
+  },
+  "VCS_STATE": {
+    "provider": "GitHub",
+    "repo": {
+      "name": "classnotifier",
+      "url": "https://github.com/Abdallahozaifa/classnotifier"
+    }
+  }
+}
